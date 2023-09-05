@@ -109,26 +109,36 @@ parse_input_buffer:
     jmp start_input
 
 view:
+    call get_list_length
+    mov eax, esi
+    cmp eax, 0
+    je view_loop_end
     mov esi, 0
 view_loop:
     mov edi, [str_arr+esi*4] ; multiply by 4 because pointers are 4 bytes :)
-    mov eax, 4
-    mov ebx, 1
     mov ecx, edi
     mov edx, 32
-    int 0x80
+    call print
 
-    mov eax, 4
-    mov ebx, 1
     mov ecx, new_line
     mov edx, 1
-    int 0x80
+    call print
 
     inc esi
-    cmp esi, 16
+    cmp esi, eax
     jl view_loop
-
+view_loop_end:
     jmp exit
+
+print:
+    push eax
+    push ebx
+    mov eax, 4
+    mov ebx, 1
+    int 0x80
+    pop ebx
+    pop eax
+    ret
 
 
 add_msg:
