@@ -105,6 +105,9 @@ parse_input_buffer:
     cmp [input_buffer], byte 'r'
     je rem_last
 
+    cmp [input_buffer], byte 'e'
+    jmp exit
+
 
     jmp start_input
 
