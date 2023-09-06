@@ -1,7 +1,7 @@
 global _start
 
 section .data
-    string db 0
+    string db 0 dup(4)
 
     test_str db "yesseY"
     new_line db 0xA
