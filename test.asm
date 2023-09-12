@@ -66,7 +66,7 @@ int_to_str_loop:
     cmp eax, 0
     jg int_to_str_loop    ; if (num > 0) goto int_to_str_loop
 
-    mov eax, string
+    mov eax, ebx
     mov ebx, esi
     call reverse_string
     ret

@@ -41,6 +41,10 @@ section .data
     nothing_to_delete_error db "Error: Nothing to delete!", 0xa
     nothing_to_delete_error_len equ $ - nothing_to_delete_error
 
+    view_bracket_start db '['
+    view_padding db '0', '0'
+    view_bracket_end db '] '
+
 section .text
 _start:
     ; Checking if todo.dat exists
@@ -118,11 +122,29 @@ view:
     je view_loop_end
     mov esi, 0
 view_loop:
+    ; print [
+    mov ecx, view_bracket_start
+    mov edx, 1
+    call print
+
+    ; print number
+    mov ecx, view_padding
+    mov edx, 2
+    call print
+
+    ; print ]
+    mov ecx, view_bracket_end
+    mov edx, 2
+    call print
+
+
+    ; print string
     mov edi, [str_arr+esi*4] ; multiply by 4 because pointers are 4 bytes :)
     mov ecx, edi
     mov edx, 32
     call print
 
+    ; print newline
     mov ecx, new_line
     mov edx, 1
     call print
